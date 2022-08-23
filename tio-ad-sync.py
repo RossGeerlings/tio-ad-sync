@@ -390,6 +390,11 @@ if __name__ == '__main__':
     # Refresh the list of io User Groups now that we have updated it.
     lUserGroups = tio.groups.list()
 
+    # Re have to refresh the corresponding UUID mapping for groups
+    dUserGroupUUID = {}
+    for user_group in lUserGroups:
+        dUserGroupUUID[str(user_group['name'])] = user_group['uuid']
+
     # Now we also need a usergroup name to ID mapping for that we are about to do (add users to groups)
     dUserGroupNameID={}
     for dUserGroup in lUserGroups:
@@ -502,9 +507,8 @@ if __name__ == '__main__':
         group_data = request_data('GET', '/scanners/1/agent-groups', params=querystring)
 
         for agent_group in group_data['groups']:
-            group_name = agent_group['name']
+            group_name = AllowedGroupNameCharsReg.sub('',agent_group['name'].replace('&','and'))
             print("On %s..." % group_name)
-            #group_id = agent_group['id']
 
             #Use NAVI to tag all the assets corresponding to the agents in the group
             #Tag name will match agent group name.

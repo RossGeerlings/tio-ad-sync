@@ -52,7 +52,9 @@ groups and users, and automate access to user groups' networks and agent groups 
   2.	Read Active Directory groups in the designated OU.  These groups must have "io-" preceding 
   the group name that you want to have in Tenable.io.
   3.	Read in your network mappings file, a CSV which maps each group in your organization to 
-  the networks (in CIDR block format) to which it should have access.
+  the networks (in CIDR format) to which it should have access.  The format for this file 
+  is each line begins with the group name, and is followed with the CIDR blocks. For example, 
+  a line might be: **Engineering,192.168.23.0/24,10.10.0.0/16,10.13.3.128/15**
   4.	Disable any users in Tenable.io who were found in the set of managed Tenable.io groups, 
   but not in the Active Directory groups.  This is done because it indicates they previously 
   were given access membership in an AD group, but then removed.  Note that accounts which you 
